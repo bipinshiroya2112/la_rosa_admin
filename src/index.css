@@ -1,0 +1,215 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Poppins", "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 234, 239, 1) 0%,
+    rgba(255, 234, 239, 1) 35%,
+    rgba(250, 250, 250, 1) 100%
+  );
+}
+
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("./utils/Fonts/HelveticaNeue.ttf") format("truetype");
+  font-weight: 400;
+}
+
+.other-bg-gradient {
+  background: linear-gradient(
+    74.38deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0) 100.75%
+  );
+}
+
+input[type="checkbox"] {
+  accent-color: #e5002a;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* react datepicker  calender*/
+
+.react-datepicker {
+  color: #737373 !important;
+  border: none !important;
+  padding: 5px;
+  border-radius: 16px !important;
+  box-shadow: 1px 1px 1px 2px #d4d4d4 !important ;
+}
+
+.react-datepicker__navigation {
+  padding: 2px;
+  box-shadow: 1px solid #d4d4d4 !important ;
+  border: 1px solid #d4d4d4 !important;
+  border-radius: 8px !important;
+  margin: 0px 10px !important;
+  top: 7px !important;
+}
+.react-datepicker__header {
+  background-color: #ffffff !important;
+  border: none !important;
+}
+
+.react-datepicker__current-month {
+  margin-bottom: 25px;
+}
+
+.react-datepicker__day {
+  line-height: 2rem !important;
+  width: 2rem !important;
+}
+.react-datepicker__day-names {
+  margin-bottom: 0px !important;
+}
+
+.react-datepicker__day--selected {
+  background-color: #e5002a !important;
+}
+
+.react-datepicker-popper[data-placement^="bottom"]
+  .react-datepicker__triangle::before,
+.react-datepicker-popper[data-placement^="bottom"]
+  .react-datepicker__triangle::after,
+.react-datepicker-popper[data-placement^="top"]
+  .react-datepicker__triangle::before,
+.react-datepicker-popper[data-placement^="top"]
+  .react-datepicker__triangle::after {
+  border-width: 0px !important;
+  border: none !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ffeaef;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #ffeaef;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+}
+
+.arrow::after {
+  content: "";
+  display: inline-block;
+  margin-left: 0.28em;
+  vertical-align: 0.09em;
+  border-top: 0.42em solid;
+  border-right: 0.32em solid transparent;
+  border-left: 0.32em solid transparent;
+}
+
+.thumbs-wrapper {
+  display: none;
+}
+
+.carousel-status {
+  display: none;
+}
+.swiper-wrapper {
+  margin: 10px 0;
+}
+
+.swiper-slide1 {
+  /* width: 111% !important; */
+  /* width: 100% !important; */
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  overflow: hidden !important;
+  z-index: -10px !important;
+}
+
+/* 
+@media only screen and (max-width: 600px) {
+  .swiper-slide1 {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    overflow: hidden !important;
+
+  }
+}
+
+@media only screen and (max-width: 1280px) {
+  .swiper-slide1 {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    overflow: hidden !important;
+  }
+} */
+
+input[type="file"] {
+  display: none;
+}
+
+.sidebar {
+  transition: all 0.4s ease-in-out;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* select-box */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+/* arrows */
+select.round {
+  background-image: url("https://cdn-icons-png.flaticon.com/512/2985/2985150.png");
+  background-position: calc(100% - 20px) calc(1em + 2px),
+    calc(100% - 15px) calc(1em + 2px), calc(100% - 0.5em) 0.5em;
+  background-size: 15px 15px, 5px 5px, 1.5em 1.5em;
+  background-repeat: no-repeat;
+}
+
+.css-13cymwt-control {
+  border-radius: 20px !important;
+  padding: 4px !important;
+  font-size: 15px;
+}
+
+.css-1u9des2-indicatorSeparator {
+  display: none;
+}
+
+.css-1jqq78o-placeholder {
+  color: #9ca3b7 !important;
+}

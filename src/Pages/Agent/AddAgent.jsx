@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstanceAuthFormData from "../../apiInstances/axiosInstanceAuthFormData";
 import axiosInstanceAuth from "../../apiInstances/axiosInstanceAuth";
@@ -20,6 +20,7 @@ import {
 } from "../../assets";
 import Layout1 from "../../Layouts/Layout1";
 import { toast } from "react-toastify";
+import uploadImage from "../../uploadImage/uploadImage.js";
 
 const AddAgent = () => {
   const [coverPhotoSize, setCoverPhotoSize] = useState("w-[1280px]");
@@ -27,6 +28,8 @@ const AddAgent = () => {
 
   const [AgencyOptions, setAgencyOptions] = useState([]);
 
+  const profileFileRef = useRef(null);
+  const coverProfileFileRef = useRef(null);
   useEffect(() => {
     GetAgencyDetail();
   }, []);
@@ -177,8 +180,11 @@ const AddAgent = () => {
         AgentCheckboxDetails?.residential_property_management
       );
       formData.append("weakly_update", AgentCheckboxDetails?.weakly_update);
-      formData.append("profileImg", AgentImages?.profileImg);
-      formData.append("coverProfileImg", AgentImages?.coverProfileImg);
+      const profileImageUpload = await uploadImage(profileFileRef);
+      const coverImageUpload = await uploadImage(coverProfileFileRef);
+
+      formData.append("profileImg", profileImageUpload?.url);
+      formData.append("coverProfileImg", coverImageUpload?.url);
 
       await axiosInstanceAuthFormData
         .post(`Agency_Agent/Register`, formData)
@@ -404,10 +410,9 @@ const AddAgent = () => {
             </div>
             <div className="flex flex-wrap flex-row justify-start items-center gap-4 my-3">
               <div
-                className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${
-                  AgentCheckboxDetails?.residential_sales &&
+                className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${AgentCheckboxDetails?.residential_sales &&
                   `text-[#E5002A] bg-[#FFEAEF] border-[#E5002A]`
-                }`}
+                  }`}
               >
                 <div>Residential Sales</div>
                 <div className="grid place-content-center rounded-2xl">
@@ -421,10 +426,9 @@ const AddAgent = () => {
                 </div>
               </div>
               <div
-                className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${
-                  AgentCheckboxDetails?.residential_property_management &&
+                className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${AgentCheckboxDetails?.residential_property_management &&
                   `text-[#E5002A] bg-[#FFEAEF] border-[#E5002A]`
-                }`}
+                  }`}
               >
                 <div>Residential Property Management</div>
                 <div className="grid place-content-center rounded-2xl">
@@ -506,13 +510,14 @@ const AddAgent = () => {
                 <label
                   htmlFor="profileImg"
                   className="px-2 cursor-pointer"
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   Replace
                   <input
                     id="profileImg"
                     type="file"
                     name="profileImg"
+                    ref={profileFileRef}
                     onChange={onChangeImages}
                   />
                 </label>
@@ -715,11 +720,10 @@ const AddAgent = () => {
                         alt="icon"
                       />
                       <p
-                        className={`text-center text-xs md:text-sm ${
-                          coverPhotoSize == "w-[400px]"
-                            ? "text-[#E5002A]"
-                            : null
-                        } `}
+                        className={`text-center text-xs md:text-sm ${coverPhotoSize == "w-[400px]"
+                          ? "text-[#E5002A]"
+                          : null
+                          } `}
                       >
                         Phone
                       </p>
@@ -737,11 +741,10 @@ const AddAgent = () => {
                         alt="icon"
                       />
                       <p
-                        className={`text-center text-xs md:text-sm ${
-                          coverPhotoSize == "w-[425px]"
-                            ? "text-[#E5002A]"
-                            : null
-                        } `}
+                        className={`text-center text-xs md:text-sm ${coverPhotoSize == "w-[425px]"
+                          ? "text-[#E5002A]"
+                          : null
+                          } `}
                       >
                         Large Phone
                       </p>
@@ -755,11 +758,10 @@ const AddAgent = () => {
                         alt="icon"
                       />
                       <p
-                        className={`text-center text-xs md:text-sm ${
-                          coverPhotoSize == "w-[768px]"
-                            ? "text-[#E5002A]"
-                            : null
-                        } `}
+                        className={`text-center text-xs md:text-sm ${coverPhotoSize == "w-[768px]"
+                          ? "text-[#E5002A]"
+                          : null
+                          } `}
                       >
                         Tablet
                       </p>
@@ -775,11 +777,10 @@ const AddAgent = () => {
                         alt="icon"
                       />
                       <p
-                        className={`text-center text-xs md:text-sm ${
-                          coverPhotoSize == "w-[1280px]"
-                            ? "text-[#E5002A]"
-                            : null
-                        } `}
+                        className={`text-center text-xs md:text-sm ${coverPhotoSize == "w-[1280px]"
+                          ? "text-[#E5002A]"
+                          : null
+                          } `}
                       >
                         Desktop
                       </p>
@@ -791,13 +792,14 @@ const AddAgent = () => {
                   <label
                     htmlFor="coverProfileImg"
                     className="px-2 cursor-pointer"
-                    onClick={() => {}}
+                    onClick={() => { }}
                   >
                     Replace
                     <input
                       id="coverProfileImg"
                       type="file"
                       name="coverProfileImg"
+                      ref={coverProfileFileRef}
                       onChange={onChangeImages}
                     />
                   </label>

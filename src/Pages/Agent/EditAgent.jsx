@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axiosInstanceAuth from "../../apiInstances/axiosInstanceAuth";
@@ -22,11 +22,13 @@ import {
 import Layout1 from "../../Layouts/Layout1";
 import moment from "moment";
 import { BACKEND_BASE_URL } from "../../apiInstances/baseurl";
+import uploadImage from "../../uploadImage/uploadImage";
 
 const EditAgent = () => {
   const [coverPhotoSize, setCoverPhotoSize] = useState("w-[1280px]");
   const navigate = useNavigate();
-
+  const profileFileRef = useRef(null);
+  const coverProfileFileRef = useRef(null);
   let id = useLocation().pathname.split("/")?.[3];
   const [AgencyOptions, setAgencyOptions] = useState([]);
 
@@ -125,8 +127,11 @@ const EditAgent = () => {
         AgentCheckboxDetails?.residential_property_management
       );
       formData.append("weakly_update", AgentCheckboxDetails?.weakly_update);
-      formData.append("profileImg", AgentImages?.profileImg);
-      formData.append("coverProfileImg", AgentImages?.coverProfileImg);
+      const profileImageUpload = await uploadImage(profileFileRef);
+      const coverImageUpload = await uploadImage(coverProfileFileRef);
+
+      formData.append("profileImg", profileImageUpload?.url);
+      formData.append("coverProfileImg", coverImageUpload?.url);
 
       axiosInstanceAuthFormData
         .post(`Agency_Agent/UpdateProfile`, formData)
@@ -431,10 +436,9 @@ const EditAgent = () => {
             </div>
             <div className="flex flex-wrap flex-row justify-start items-center gap-4 my-3">
               <div
-                className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${
-                  AgentCheckboxDetails?.residential_sales &&
+                className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${AgentCheckboxDetails?.residential_sales &&
                   `text-[#E5002A] bg-[#FFEAEF] border-[#E5002A]`
-                }`}
+                  }`}
               >
                 <div>Residential Sales</div>
                 <div className="grid place-content-center rounded-2xl">
@@ -448,10 +452,9 @@ const EditAgent = () => {
                 </div>
               </div>
               <div
-                className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${
-                  AgentCheckboxDetails?.residential_property_management &&
+                className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${AgentCheckboxDetails?.residential_property_management &&
                   `text-[#E5002A] bg-[#FFEAEF] border-[#E5002A]`
-                }`}
+                  }`}
               >
                 <div>Residential Property Management</div>
                 <div className="grid place-content-center rounded-2xl">
@@ -505,7 +508,7 @@ const EditAgent = () => {
                     />
                   ) : (
                     <img
-                      src={`${BACKEND_BASE_URL}${AgentImages?.profileImg}`}
+                      src={AgentImages?.profileImg}
                       alt=""
                       className="border-2 border-dashed border-black rounded-lg"
                     />
@@ -520,7 +523,7 @@ const EditAgent = () => {
                     />
                   ) : (
                     <img
-                      src={`${BACKEND_BASE_URL}${AgentImages?.profileImg}`}
+                      src={AgentImages?.profileImg}
                       alt=""
                       className="border-2 border-dashed border-black aspect-square w-60 rounded-full"
                     />
@@ -531,13 +534,14 @@ const EditAgent = () => {
                 <label
                   htmlFor="profileImg"
                   className="px-2 cursor-pointer"
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   Replace
                   <input
                     id="profileImg"
                     type="file"
                     name="profileImg"
+                    ref={profileFileRef}
                     onChange={onChangeImages}
                   />
                 </label>
@@ -723,7 +727,7 @@ const EditAgent = () => {
                 ) : (
                   <img
                     // src={AgentImages?.coverProfileImg}
-                    src={`${BACKEND_BASE_URL}${AgentImages?.coverProfileImg}`}
+                    src={AgentImages?.coverProfileImg}
                     alt="cover"
                     className={`grid place-items-center ${coverPhotoSize} h-[500px] border-2 border-dashed border-black rounded-lg object-cover`}
                   />
@@ -742,11 +746,10 @@ const EditAgent = () => {
                         alt="icon"
                       />
                       <p
-                        className={`text-center text-xs md:text-sm ${
-                          coverPhotoSize == "w-[400px]"
-                            ? "text-[#E5002A]"
-                            : null
-                        } `}
+                        className={`text-center text-xs md:text-sm ${coverPhotoSize == "w-[400px]"
+                          ? "text-[#E5002A]"
+                          : null
+                          } `}
                       >
                         Phone
                       </p>
@@ -764,11 +767,10 @@ const EditAgent = () => {
                         alt="icon"
                       />
                       <p
-                        className={`text-center text-xs md:text-sm ${
-                          coverPhotoSize == "w-[425px]"
-                            ? "text-[#E5002A]"
-                            : null
-                        } `}
+                        className={`text-center text-xs md:text-sm ${coverPhotoSize == "w-[425px]"
+                          ? "text-[#E5002A]"
+                          : null
+                          } `}
                       >
                         Large Phone
                       </p>
@@ -782,11 +784,10 @@ const EditAgent = () => {
                         alt="icon"
                       />
                       <p
-                        className={`text-center text-xs md:text-sm ${
-                          coverPhotoSize == "w-[768px]"
-                            ? "text-[#E5002A]"
-                            : null
-                        } `}
+                        className={`text-center text-xs md:text-sm ${coverPhotoSize == "w-[768px]"
+                          ? "text-[#E5002A]"
+                          : null
+                          } `}
                       >
                         Tablet
                       </p>
@@ -802,11 +803,10 @@ const EditAgent = () => {
                         alt="icon"
                       />
                       <p
-                        className={`text-center text-xs md:text-sm ${
-                          coverPhotoSize == "w-[1280px]"
-                            ? "text-[#E5002A]"
-                            : null
-                        } `}
+                        className={`text-center text-xs md:text-sm ${coverPhotoSize == "w-[1280px]"
+                          ? "text-[#E5002A]"
+                          : null
+                          } `}
                       >
                         Desktop
                       </p>
@@ -818,13 +818,14 @@ const EditAgent = () => {
                   <label
                     htmlFor="coverProfileImg"
                     className="px-2 cursor-pointer"
-                    onClick={() => {}}
+                    onClick={() => { }}
                   >
                     Replace
                     <input
                       id="coverProfileImg"
                       type="file"
                       name="coverProfileImg"
+                      ref={coverProfileFileRef}
                       onChange={onChangeImages}
                     />
                   </label>

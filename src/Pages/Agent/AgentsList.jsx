@@ -164,7 +164,7 @@ const AgentsList = () => {
                 >
                   <div className="w-[40%] md:w-[15%]">
                     <img
-                      src={`${BACKEND_BASE_URL}${d?.profileImg}`}
+                      src={d?.profileImg}
                       alt="icon"
                       className="rounded-lg h-20 w-full object-fill"
                     />

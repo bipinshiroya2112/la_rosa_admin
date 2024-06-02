@@ -31,6 +31,7 @@ const EditAgent = () => {
   const coverProfileFileRef = useRef(null);
   let id = useLocation().pathname.split("/")?.[3];
   const [AgencyOptions, setAgencyOptions] = useState([]);
+  const [isLoader, setIsLoader] = useState(false)
 
   useEffect(() => {
     GetAgentData(id);
@@ -84,6 +85,7 @@ const EditAgent = () => {
 
   const EditAgent = async () => {
     try {
+      setIsLoader(true)
       const formData = new FormData();
       formData.append("id", id);
       formData.append("agency_id", AgentDetails?.agency_id);
@@ -127,19 +129,32 @@ const EditAgent = () => {
         AgentCheckboxDetails?.residential_property_management
       );
       formData.append("weakly_update", AgentCheckboxDetails?.weakly_update);
-      const profileImageUpload = await uploadImage(profileFileRef);
-      const coverImageUpload = await uploadImage(coverProfileFileRef);
-
-      formData.append("profileImg", profileImageUpload?.url);
-      formData.append("coverProfileImg", coverImageUpload?.url);
+      let profileImageUpload;
+      let coverImageUpload;
+      if (profileFileRef.current.files[0] != undefined) {
+        const upload = await uploadImage(profileFileRef);
+        profileImageUpload = upload.url
+      } else {
+        profileImageUpload = AgentImages.profileImg
+      }
+      if (coverProfileFileRef.current.files[0] != undefined) {
+        const upload = await uploadImage(coverProfileFileRef);
+        coverImageUpload = upload.url
+      } else {
+        coverImageUpload = AgentImages.coverProfileImg
+      }
+      formData.append("coverProfileImg", coverImageUpload);
+      formData.append("profileImg", profileImageUpload);
 
       axiosInstanceAuthFormData
         .post(`Agency_Agent/UpdateProfile`, formData)
         .then((res) => {
           if (res?.data?.status) {
+            setIsLoader(false)
             toast.success("Agent Edited Successfuly");
             navigate(`/agents`);
           } else {
+            setIsLoader(false)
             toast.error(res?.data?.message);
           }
         })
@@ -233,6 +248,7 @@ const EditAgent = () => {
 
   return (
     <Layout1>
+      {isLoader ? <div class="loading">Loading&#8230;</div> : null}
       <div className="container mx-auto px-5 xl:px-0">
         {/* ---------- section 1  ---------- */}
         <div className="grid grid-cols-1 2xl:grid-cols-3 gap-5 bg-white rounded-2xl shadow-md p-4 md:p-6">

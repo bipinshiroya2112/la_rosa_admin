@@ -29,7 +29,7 @@ const ListingList = () => {
   const [filterData, setFilterData] = useState([]);
   const [shares, setshare] = useState(false);
   const navigate = useNavigate();
-
+  const [isShow, setIsShow] = useState(false);
   const [AgentData, setAgentData] = useState();
   const [profileid, setprofileid] = useState();
 
@@ -75,8 +75,6 @@ const ListingList = () => {
       ...Filter,
       [name]: value,
     });
-    console.log("listing", ListingDetails);
-    console.log("values:>>>", value);
     if (value.length == 0) {
       setFilterData(ListingDetails);
     }
@@ -273,8 +271,26 @@ const ListingList = () => {
             <h1 className="text-[#404040] font-extrabold text-lg md:text-xl lg:text-2xl">
               Your Listings
             </h1>
+            <div className="round relative flex items-center justify-between !text-[#404040] text-xs md:text-sm outline-none border border-[#E5E5E5]  rounded-[28px] cursor-pointer" >
+              <p className="px-5">Select Listing Type</p>
+              <div className={`${isShow ? "" : "hidden"} round absolute w-full !text-[#404040] bg-white top-11 right-0 text-xs md:text-sm outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5 cursor-pointer`}>
+                {PropertyType?.length > 0 &&
+                  PropertyType?.map((d, index) => (
+                    <p key={index} value={d?.id} className="list-type rounded-[28px] py-1 px-2" onClick={(e) => {
+                      navigate(`/listings/add/${d?.id}`);
+                    }}>
+                      {d?.title}
+                    </p>
+                  ))}
+              </div>
+              <div className="border border-[#E5002A] bg-[#E5002A] rounded-3xl py-2 px-5 cursor-pointer" onClick={() => setIsShow(!isShow)}>
+                <div className="text-white font-medium text-xs md:text-sm lg:text-base">
+                  Add New Listing
+                </div>
+              </div>
+            </div>
 
-            <select
+            {/* <select
               name="select"
               className="round !text-[#404040] text-xs md:text-sm outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5 cursor-pointer"
               onChange={(e) => {
@@ -290,7 +306,7 @@ const ListingList = () => {
                     {d?.title}
                   </option>
                 ))}
-            </select>
+            </select> */}
 
             <div className="w-full flex flex-row flex-wrap xl:flex-nowrap justify-start items-center gap-4">
               <div className="w-full md:w-[48%] xl:w-[24%] flex flex-col justify-start gap-2">
@@ -444,7 +460,7 @@ const ListingList = () => {
                   {/* {console.log(i?.lead_agent?.name)} */}
                   <div className="flex flex-col lg:flex-row justify-start  gap-2">
                     <img
-                      src={`${BACKEND_BASE_URL}${i?.frontPageImg?.[0]}`}
+                      src={i?.frontPageImg?.[0]}
                       alt=""
                       className="w-full lg:w-[200px] h-52 lg:h-32 rounded-lg"
                     />

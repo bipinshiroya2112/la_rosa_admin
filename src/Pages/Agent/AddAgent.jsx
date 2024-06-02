@@ -25,6 +25,7 @@ import uploadImage from "../../uploadImage/uploadImage.js";
 const AddAgent = () => {
   const [coverPhotoSize, setCoverPhotoSize] = useState("w-[1280px]");
   const navigate = useNavigate();
+  const [isLoader, setIsLoader] = useState(false)
 
   const [AgencyOptions, setAgencyOptions] = useState([]);
 
@@ -137,6 +138,7 @@ const AddAgent = () => {
 
   const AddNewAgent = async () => {
     try {
+      setIsLoader(true)
       const formData = new FormData();
       formData.append("role", "agent");
       formData.append("agency_id", AgentDetails?.agency_id);
@@ -190,9 +192,11 @@ const AddAgent = () => {
         .post(`Agency_Agent/Register`, formData)
         .then((res) => {
           if (res?.data?.status) {
+            setIsLoader(false)
             toast.success("Agent Added Successfuly");
             navigate(`/agents`);
           } else {
+            setIsLoader(false)
             toast.error(res?.data?.message);
           }
         })
@@ -206,6 +210,7 @@ const AddAgent = () => {
 
   return (
     <Layout1>
+      {isLoader ? <div class="loading">Loading&#8230;</div> : null}
       <div className="container mx-auto px-5 xl:px-0">
         {/* ---------- section 1  ---------- */}
         <div className="grid grid-cols-1 2xl:grid-cols-3 gap-5 bg-white rounded-2xl shadow-md p-4 md:p-6">

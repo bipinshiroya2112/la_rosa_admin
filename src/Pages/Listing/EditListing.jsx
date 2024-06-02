@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { json, useLocation, useNavigate } from "react-router-dom";
 import {
   add,
@@ -30,10 +30,19 @@ import axiosInstanceAuthFormData from "../../apiInstances/axiosInstanceAuthFormD
 import { toast } from "react-toastify";
 import axiosInstanceAuth from "../../apiInstances/axiosInstanceAuth";
 import { BACKEND_BASE_URL } from "../../apiInstances/baseurl";
+import uploadMultiPalImage from '../../uploadImage/uploadMultiPalImage'
 
 const EditListing = () => {
   const navigate = useNavigate();
-
+  const florInputRef = useRef(null);
+  const propertyInputRef = useRef(null);
+  const frontPageInputRef = useRef(null);
+  const statementInputRef = useRef(null);
+  const [propertyImgRef, setPropertyImgRef] = useState([])
+  const [florImgRef, setFlorImgRef] = useState([])
+  const [frontPageImgRef, setFrontPageImgRef] = useState([])
+  const [statementPdfRef, setStatementPdfRef] = useState([])
+  const [isLoader, setIsLoader] = useState(false)
   let id = useLocation().pathname.split("/")?.[3];
 
   const [AgentsInfo, setAgentsInfo] = useState([]);
@@ -371,6 +380,22 @@ const EditListing = () => {
     const { name, checked } = e.target;
     setListingCheckboxs({ ...ListingCheckboxs, [name]: checked });
   };
+  const onPropertyImageUpload = () => {
+    const propertyFiles = Array.from(propertyInputRef.current.files);
+    setPropertyImgRef((preFiles) => [...preFiles, ...propertyFiles]);
+  }
+  const onFlorImageUpload = () => {
+    const florFiles = Array.from(florInputRef.current.files);
+    setFlorImgRef((preFiles) => [...preFiles, ...florFiles]);
+  }
+  const onFrontImageUpload = () => {
+    const frontFiles = Array.from(frontPageInputRef.current.files);
+    setFrontPageImgRef((preFiles) => [...preFiles, ...frontFiles]);
+  }
+  const onStatementUpload = () => {
+    const statementFiles = Array.from(statementInputRef.current.files);
+    setStatementPdfRef((preFiles) => [...preFiles, ...statementFiles]);
+  }
 
   const onChangeImages = (e) => {
     const { name } = e.target;
@@ -419,6 +444,7 @@ const EditListing = () => {
 
   const handelFinalSubmit = async () => {
     try {
+      setIsLoader(true);
       const formData = new FormData();
 
       for (const key in ListingDetails) {
@@ -495,18 +521,47 @@ const EditListing = () => {
         JSON.stringify(ListingCheckboxs?.eco_friendly)
       );
 
-      for (let i = 0; i < ListingImages?.propertyImg?.length; i++) {
-        formData.append("propertyImg", ListingImages?.propertyImg[i]);
+      let propertyImg = []
+      for (let i = 0; i < propertyImgRef.length; i++) {
+        const uploadImg = await uploadMultiPalImage(propertyImgRef[i])
+        propertyImg.push(uploadImg.url)
       }
-      for (let i = 0; i < ListingImages?.florePlansImg?.length; i++) {
-        formData.append("florePlansImg", ListingImages?.florePlansImg[i]);
+
+      let florPlanImg = []
+      for (let i = 0; i < florImgRef.length; i++) {
+        const uploadImg = await uploadMultiPalImage(florImgRef[i])
+        florPlanImg.push(uploadImg.url)
       }
-      for (let i = 0; i < ListingImages?.frontPageImg?.length; i++) {
-        formData.append("frontPageImg", ListingImages?.frontPageImg[i]);
+
+      let frontPageImg = []
+      for (let i = 0; i < frontPageImgRef.length; i++) {
+        const uploadImg = await uploadMultiPalImage(frontPageImgRef[i])
+        frontPageImg.push(uploadImg.url)
       }
-      for (let i = 0; i < ListingImages?.statementOfInfo?.length; i++) {
-        formData.append("statementOfInfo", ListingImages?.statementOfInfo[i]);
+
+      let statementPdf = []
+      for (let i = 0; i < statementPdfRef.length; i++) {
+        const uploadImg = await uploadMultiPalImage(statementPdfRef[i])
+        statementPdf.push(uploadImg.url)
       }
+
+      formData.append("propertyImg", JSON.stringify(propertyImg));
+      formData.append("florePlansImg", JSON.stringify(florPlanImg));
+      formData.append("frontPageImg", JSON.stringify(frontPageImg));
+      formData.append("statementOfInfo", JSON.stringify(statementPdf));
+
+      // for (let i = 0; i < ListingImages?.propertyImg?.length; i++) {
+      //   formData.append("propertyImg", ListingImages?.propertyImg[i]);
+      // }
+      // for (let i = 0; i < ListingImages?.florePlansImg?.length; i++) {
+      //   formData.append("florePlansImg", ListingImages?.florePlansImg[i]);
+      // }
+      // for (let i = 0; i < ListingImages?.frontPageImg?.length; i++) {
+      //   formData.append("frontPageImg", ListingImages?.frontPageImg[i]);
+      // }
+      // for (let i = 0; i < ListingImages?.statementOfInfo?.length; i++) {
+      //   formData.append("statementOfInfo", ListingImages?.statementOfInfo[i]);
+      // }
 
       formData.append("inspection_times", JSON.stringify(InspectionTimes));
 
@@ -514,9 +569,11 @@ const EditListing = () => {
         .post(`admin/Listing/edit/${id}`, formData)
         .then((res) => {
           if (res?.data?.status) {
+            setIsLoader(false);
             toast.success(res?.data?.message);
             navigate(`/listings`);
           } else {
+            setIsLoader(false);
             toast.error(res?.data?.message);
           }
         })
@@ -530,6 +587,7 @@ const EditListing = () => {
 
   return (
     <Layout1>
+      {isLoader ? <div class="loading">Loading&#8230;</div> : null}
       <div className="p-5 xl:px-16">
         <div className="container mx-auto">
           {/* ---------- section 1  ---------- */}
@@ -556,7 +614,7 @@ const EditListing = () => {
 
               {CampaignImg ? (
                 <img
-                  src={`${BACKEND_BASE_URL}${CampaignImg}`}
+                  src={CampaignImg}
                   alt=""
                   className="rounded-xl"
                 />
@@ -589,9 +647,8 @@ const EditListing = () => {
                     AllTabs?.map((d, index) => (
                       <div
                         key={index}
-                        className={`${NormalTab} ${
-                          isActive === d ? ActiveTab : ""
-                        }`}
+                        className={`${NormalTab} ${isActive === d ? ActiveTab : ""
+                          }`}
                         onClick={() => {
                           setisActive(d);
                         }}
@@ -711,11 +768,10 @@ const EditListing = () => {
                       NewOrEstablished?.map((d, index) => (
                         <div
                           key={index}
-                          className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${
-                            ListingDetails?.new_or_established_checked ===
-                              d?.name &&
+                          className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${ListingDetails?.new_or_established_checked ===
+                            d?.name &&
                             `text-[#E5002A] bg-[#FFEAEF] border-[#E5002A]`
-                          }`}
+                            }`}
                           onClick={() => {
                             setListingDetails({
                               ...ListingDetails,
@@ -847,11 +903,10 @@ const EditListing = () => {
                           className="flex flex-row justify-start items-center gap-2"
                         >
                           <div
-                            className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${
-                              ListingDetails?.price_display_checked ===
-                                d?.name &&
+                            className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${ListingDetails?.price_display_checked ===
+                              d?.name &&
                               `text-[#E5002A] bg-[#FFEAEF] border-[#E5002A]`
-                            }`}
+                              }`}
                             onClick={() => {
                               setListingDetails({
                                 ...ListingDetails,
@@ -1278,11 +1333,10 @@ const EditListing = () => {
                         Bedrooms?.map((d, index) => (
                           <div
                             key={index}
-                            className={`${normalBox} ${
-                              ListingDetails?.Bedrooms === d?.name
-                                ? selectedBox
-                                : ""
-                            }`}
+                            className={`${normalBox} ${ListingDetails?.Bedrooms === d?.name
+                              ? selectedBox
+                              : ""
+                              }`}
                             onClick={() => {
                               setListingDetails({
                                 ...ListingDetails,
@@ -1303,11 +1357,10 @@ const EditListing = () => {
                         Bathrooms?.map((d, index) => (
                           <div
                             key={index}
-                            className={`${normalBox} ${
-                              ListingDetails?.Bathrooms === d?.name
-                                ? selectedBox
-                                : ""
-                            }`}
+                            className={`${normalBox} ${ListingDetails?.Bathrooms === d?.name
+                              ? selectedBox
+                              : ""
+                              }`}
                             onClick={() => {
                               setListingDetails({
                                 ...ListingDetails,
@@ -1521,13 +1574,12 @@ const EditListing = () => {
                       OutdoorFeatures?.map((d, index) => (
                         <div
                           key={index}
-                          className={`${normalBox} ${
-                            ListingCheckboxs?.outdoor_features?.some(
-                              (data) => data === d?.name
-                            )
-                              ? selectedBox
-                              : ""
-                          }`}
+                          className={`${normalBox} ${ListingCheckboxs?.outdoor_features?.some(
+                            (data) => data === d?.name
+                          )
+                            ? selectedBox
+                            : ""
+                            }`}
                           onClick={() => {
                             const isSelected =
                               ListingCheckboxs?.outdoor_features?.some(
@@ -1580,13 +1632,12 @@ const EditListing = () => {
                       IndoorFeatures?.map((d, index) => (
                         <div
                           key={index}
-                          className={`${normalBox} ${
-                            ListingCheckboxs?.indoor_features?.some(
-                              (data) => data === d?.name
-                            )
-                              ? selectedBox
-                              : ""
-                          }`}
+                          className={`${normalBox} ${ListingCheckboxs?.indoor_features?.some(
+                            (data) => data === d?.name
+                          )
+                            ? selectedBox
+                            : ""
+                            }`}
                           onClick={() => {
                             const isSelected =
                               ListingCheckboxs?.indoor_features?.some(
@@ -1639,13 +1690,12 @@ const EditListing = () => {
                       HeatingOrCooling?.map((d, index) => (
                         <div
                           key={index}
-                          className={`${normalBox} ${
-                            ListingCheckboxs?.heating_cooling?.some(
-                              (data) => data === d?.name
-                            )
-                              ? selectedBox
-                              : ""
-                          }`}
+                          className={`${normalBox} ${ListingCheckboxs?.heating_cooling?.some(
+                            (data) => data === d?.name
+                          )
+                            ? selectedBox
+                            : ""
+                            }`}
                           onClick={() => {
                             const isSelected =
                               ListingCheckboxs?.heating_cooling?.some(
@@ -1698,13 +1748,12 @@ const EditListing = () => {
                       EcoFriendlyFeatures?.map((d, index) => (
                         <div
                           key={index}
-                          className={`${normalBox} ${
-                            ListingCheckboxs?.eco_friendly?.some(
-                              (data) => data === d?.name
-                            )
-                              ? selectedBox
-                              : ""
-                          }`}
+                          className={`${normalBox} ${ListingCheckboxs?.eco_friendly?.some(
+                            (data) => data === d?.name
+                          )
+                            ? selectedBox
+                            : ""
+                            }`}
                           onClick={() => {
                             const isSelected =
                               ListingCheckboxs?.eco_friendly?.some(
@@ -1766,13 +1815,12 @@ const EditListing = () => {
                       ClimateChangerAndEnergySaver?.map((d, index) => (
                         <div
                           key={index}
-                          className={`${normalBox} ${
-                            ListingCheckboxs?.climate_energy?.some(
-                              (data) => data === d?.name
-                            )
-                              ? selectedBox
-                              : ""
-                          }`}
+                          className={`${normalBox} ${ListingCheckboxs?.climate_energy?.some(
+                            (data) => data === d?.name
+                          )
+                            ? selectedBox
+                            : ""
+                            }`}
                           onClick={() => {
                             const isSelected =
                               ListingCheckboxs?.climate_energy?.some(
@@ -1931,14 +1979,15 @@ const EditListing = () => {
                   <label
                     htmlFor="propertyImg"
                     className="flex flex-col md:flex-row justify-center items-center gap-2 py-10 xl:py-24 cursor-pointer"
-                    onClick={() => {}}
+                    onClick={() => { }}
                   >
                     <input
                       id="propertyImg"
                       type="file"
                       name="propertyImg"
                       multiple
-                      onChange={onChangeImages}
+                      ref={propertyInputRef}
+                      onChange={(e) => { onChangeImages(e); onPropertyImageUpload() }}
                     />
                     <img src={dragImgIcon} alt="icon" className="w-8 lg:w-12" />
                     <div className="flex flex-row flex-wrap justify-center items-center gap-2 font-semibold text-center text-xs md:text-base lg:text-lg text-[#171717]">
@@ -2012,14 +2061,15 @@ const EditListing = () => {
                   <label
                     htmlFor="florePlansImg"
                     className="flex flex-col md:flex-row justify-center items-center gap-2 py-10 xl:py-24 cursor-pointer"
-                    onClick={() => {}}
+                    onClick={() => { }}
                   >
                     <input
                       id="florePlansImg"
                       type="file"
                       multiple
                       name="florePlansImg"
-                      onChange={onChangeImages}
+                      ref={florInputRef}
+                      onChange={(e) => { onChangeImages(e); onFlorImageUpload() }}
                     />
                     <img src={dragImgIcon} alt="icon" className="w-8 lg:w-12" />
                     <div className="flex flex-row flex-wrap justify-center items-center gap-2 font-semibold text-center text-xs md:text-base lg:text-lg text-[#171717]">
@@ -2091,14 +2141,15 @@ const EditListing = () => {
                   <label
                     htmlFor="statementOfInfo"
                     className="flex flex-col md:flex-row justify-center items-center gap-2 py-10 xl:py-24 cursor-pointer"
-                    onClick={() => {}}
+                    onClick={() => { }}
                   >
                     <input
                       id="statementOfInfo"
                       type="file"
                       name="statementOfInfo"
                       multiple
-                      onChange={onChangeImages}
+                      ref={statementInputRef}
+                      onChange={(e) => { onChangeImages(e); onStatementUpload() }}
                     />
                     <img src={dragImgIcon} alt="icon" className="w-8 lg:w-12" />
                     <div className="flex flex-row flex-wrap justify-center items-center gap-2 font-semibold text-center text-xs md:text-base lg:text-lg text-[#171717]">
@@ -2167,14 +2218,15 @@ const EditListing = () => {
                   <label
                     htmlFor="frontPageImg"
                     className="flex flex-col md:flex-row justify-center items-center gap-2 py-10 xl:py-24 cursor-pointer"
-                    onClick={() => {}}
+                    onClick={() => { }}
                   >
                     <input
                       id="frontPageImg"
                       type="file"
                       name="frontPageImg"
                       multiple
-                      onChange={onChangeImages}
+                      ref={frontPageInputRef}
+                      onChange={(e) => { onChangeImages(e); onFrontImageUpload() }}
                     />
                     <img src={dragImgIcon} alt="icon" className="w-8 lg:w-12" />
                     <div className="w-auto md:w-[50%] flex flex-row flex-wrap justify-center items-center gap-2 font-semibold text-center text-xs md:text-base lg:text-lg text-[#171717]">

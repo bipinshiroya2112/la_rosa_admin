@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   add,
@@ -32,11 +32,20 @@ import { DocumentViewer } from "react-documents";
 import axiosInstanceAuthFormData from "../../apiInstances/axiosInstanceAuthFormData";
 import { toast } from "react-toastify";
 import axiosInstanceAuth from "../../apiInstances/axiosInstanceAuth";
+import uploadMultiPalImage from '../../uploadImage/uploadMultiPalImage'
 
 const AddListing = () => {
   const { type } = useParams();
   const navigate = useNavigate();
-
+  const florInputRef = useRef(null);
+  const propertyInputRef = useRef(null);
+  const frontPageInputRef = useRef(null);
+  const statementInputRef = useRef(null);
+  const [propertyImgRef, setPropertyImgRef] = useState([])
+  const [florImgRef, setFlorImgRef] = useState([])
+  const [frontPageImgRef, setFrontPageImgRef] = useState([])
+  const [statementPdfRef, setStatementPdfRef] = useState([])
+  const [isLoader, setIsLoader] = useState(false)
   const [AgentsInfo, setAgentsInfo] = useState([]);
   const [AgencyOptions, setAgencyOptions] = useState([]);
 
@@ -207,7 +216,7 @@ const AddListing = () => {
     // ------------ Inspactions ------------
   });
 
-  console.log("🚀 ~ AddListing ~ ListingDetails:", ListingDetails)
+  // console.log("🚀 ~ AddListing ~ ListingDetails:", ListingDetails)
   const [ListingCheckboxs, setListingCheckboxs] = useState({
     // ------------ Listing Details ------------
     established_property: true,
@@ -232,7 +241,7 @@ const AddListing = () => {
 
     // ------------ Inspactions ------------
   });
-  console.log(ListingCheckboxs?.eco_friendly);
+  // console.log(ListingCheckboxs?.eco_friendly);
   const [ListingImages, setListingImages] = useState({
     propertyImg: [],
     propertyImgShow: [],
@@ -253,6 +262,23 @@ const AddListing = () => {
     const { name, checked } = e.target;
     setListingCheckboxs({ ...ListingCheckboxs, [name]: checked });
   };
+
+  const onPropertyImageUpload = () => {
+    const propertyFiles = Array.from(propertyInputRef.current.files);
+    setPropertyImgRef((preFiles) => [...preFiles, ...propertyFiles]);
+  }
+  const onFlorImageUpload = () => {
+    const florFiles = Array.from(florInputRef.current.files);
+    setFlorImgRef((preFiles) => [...preFiles, ...florFiles]);
+  }
+  const onFrontImageUpload = () => {
+    const frontFiles = Array.from(frontPageInputRef.current.files);
+    setFrontPageImgRef((preFiles) => [...preFiles, ...frontFiles]);
+  }
+  const onStatementUpload = () => {
+    const statementFiles = Array.from(statementInputRef.current.files);
+    setStatementPdfRef((preFiles) => [...preFiles, ...statementFiles]);
+  }
 
   const onChangeImages = (e) => {
     const { name } = e.target;
@@ -300,6 +326,7 @@ const AddListing = () => {
 
   const handelFinalSubmit = async () => {
     try {
+      setIsLoader(true);
       const formData = new FormData();
       formData.append("listing_type", Heading?.key);
 
@@ -364,18 +391,47 @@ const AddListing = () => {
         JSON.stringify(ListingCheckboxs?.eco_friendly)
       );
 
-      for (let i = 0; i < ListingImages?.propertyImg?.length; i++) {
-        formData.append("propertyImg", ListingImages?.propertyImg[i]);
+      let propertyImg = []
+      for (let i = 0; i < propertyImgRef.length; i++) {
+        const uploadImg = await uploadMultiPalImage(propertyImgRef[i])
+        propertyImg.push(uploadImg.url)
       }
-      for (let i = 0; i < ListingImages?.florePlansImg?.length; i++) {
-        formData.append("florePlansImg", ListingImages?.florePlansImg[i]);
+
+      let florPlanImg = []
+      for (let i = 0; i < florImgRef.length; i++) {
+        const uploadImg = await uploadMultiPalImage(florImgRef[i])
+        florPlanImg.push(uploadImg.url)
       }
-      for (let i = 0; i < ListingImages?.frontPageImg?.length; i++) {
-        formData.append("frontPageImg", ListingImages?.frontPageImg[i]);
+
+      let frontPageImg = []
+      for (let i = 0; i < frontPageImgRef.length; i++) {
+        const uploadImg = await uploadMultiPalImage(frontPageImgRef[i])
+        frontPageImg.push(uploadImg.url)
       }
-      for (let i = 0; i < ListingImages?.statementOfInfo?.length; i++) {
-        formData.append("statementOfInfo", ListingImages?.statementOfInfo[i]);
+
+      let statementPdf = []
+      for (let i = 0; i < statementPdfRef.length; i++) {
+        const uploadImg = await uploadMultiPalImage(statementPdfRef[i])
+        statementPdf.push(uploadImg.url)
       }
+
+      formData.append("propertyImg", JSON.stringify(propertyImg));
+      formData.append("florePlansImg", JSON.stringify(florPlanImg));
+      formData.append("frontPageImg", JSON.stringify(frontPageImg));
+      formData.append("statementOfInfo", JSON.stringify(statementPdf));
+
+      // for (let i = 0; i < ListingImages?.propertyImg?.length; i++) {
+      //   formData.append("propertyImg", ListingImages?.propertyImg[i]);
+      // }
+      // for (let i = 0; i < ListingImages?.florePlansImg?.length; i++) {
+      //   formData.append("florePlansImg", ListingImages?.florePlansImg[i]);
+      // }
+      // for (let i = 0; i < ListingImages?.frontPageImg?.length; i++) {
+      //   formData.append("frontPageImg", ListingImages?.frontPageImg[i]);
+      // }
+      // for (let i = 0; i < ListingImages?.statementOfInfo?.length; i++) {
+      //   formData.append("statementOfInfo", ListingImages?.statementOfInfo[i]);
+      // }
 
       formData.append("inspection_times", JSON.stringify(InspectionTimes));
 
@@ -383,9 +439,11 @@ const AddListing = () => {
         .post(`admin/Listing/create`, formData)
         .then((res) => {
           if (res?.data?.status) {
+            setIsLoader(false);
             toast.success("Property Listed Successfuly");
             navigate(`/listings`);
           } else {
+            setIsLoader(false);
             toast.error(res?.data?.message);
           }
         })
@@ -399,6 +457,7 @@ const AddListing = () => {
 
   return (
     <Layout1>
+      {isLoader ? <div class="loading">Loading&#8230;</div> : null}
       <div className="container mx-auto px-5 xl:px-0">
         {/* ---------- section 1  ---------- */}
         <div className="flex flex-col justify-start gap-5 bg-white rounded-2xl shadow-md p-4 md:p-6 mb-6 md:mb-10">
@@ -625,11 +684,10 @@ const AddListing = () => {
                     NewOrEstablished?.map((d, index) => (
                       <div
                         key={index}
-                        className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${
-                          ListingDetails?.new_or_established_checked ===
-                            d?.name &&
+                        className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${ListingDetails?.new_or_established_checked ===
+                          d?.name &&
                           `text-[#E5002A] bg-[#FFEAEF] border-[#E5002A]`
-                        }`}
+                          }`}
                         onClick={() => {
                           setListingDetails({
                             ...ListingDetails,
@@ -749,10 +807,9 @@ const AddListing = () => {
                         className="flex flex-row justify-start items-center gap-2"
                       >
                         <div
-                          className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${
-                            ListingDetails?.price_display_checked === d?.name &&
+                          className={`flex justify-center items-center gap-3 border  rounded-3xl font-medium text-xs md:text-sm cursor-pointer py-2 px-5 ${ListingDetails?.price_display_checked === d?.name &&
                             `text-[#E5002A] bg-[#FFEAEF] border-[#E5002A]`
-                          }`}
+                            }`}
                           onClick={() => {
                             setListingDetails({
                               ...ListingDetails,
@@ -1182,11 +1239,10 @@ const AddListing = () => {
                       Bedrooms?.map((d, index) => (
                         <div
                           key={index}
-                          className={`${normalBox} ${
-                            ListingDetails?.Bedrooms === d?.name
-                              ? selectedBox
-                              : ""
-                          }`}
+                          className={`${normalBox} ${ListingDetails?.Bedrooms === d?.name
+                            ? selectedBox
+                            : ""
+                            }`}
                           onClick={() => {
                             setListingDetails({
                               ...ListingDetails,
@@ -1207,11 +1263,10 @@ const AddListing = () => {
                       Bathrooms?.map((d, index) => (
                         <div
                           key={index}
-                          className={`${normalBox} ${
-                            ListingDetails?.Bathrooms === d?.name
-                              ? selectedBox
-                              : ""
-                          }`}
+                          className={`${normalBox} ${ListingDetails?.Bathrooms === d?.name
+                            ? selectedBox
+                            : ""
+                            }`}
                           onClick={() => {
                             setListingDetails({
                               ...ListingDetails,
@@ -1425,13 +1480,12 @@ const AddListing = () => {
                     OutdoorFeatures?.map((d, index) => (
                       <div
                         key={index}
-                        className={`${normalBox} ${
-                          ListingCheckboxs?.outdoor_features?.some(
-                            (data) => data === d?.name
-                          )
-                            ? selectedBox
-                            : ""
-                        }`}
+                        className={`${normalBox} ${ListingCheckboxs?.outdoor_features?.some(
+                          (data) => data === d?.name
+                        )
+                          ? selectedBox
+                          : ""
+                          }`}
                         onClick={() => {
                           const isSelected =
                             ListingCheckboxs?.outdoor_features?.some(
@@ -1484,13 +1538,12 @@ const AddListing = () => {
                     IndoorFeatures?.map((d, index) => (
                       <div
                         key={index}
-                        className={`${normalBox} ${
-                          ListingCheckboxs?.indoor_features?.some(
-                            (data) => data === d?.name
-                          )
-                            ? selectedBox
-                            : ""
-                        }`}
+                        className={`${normalBox} ${ListingCheckboxs?.indoor_features?.some(
+                          (data) => data === d?.name
+                        )
+                          ? selectedBox
+                          : ""
+                          }`}
                         onClick={() => {
                           const isSelected =
                             ListingCheckboxs?.indoor_features?.some(
@@ -1543,13 +1596,12 @@ const AddListing = () => {
                     HeatingOrCooling?.map((d, index) => (
                       <div
                         key={index}
-                        className={`${normalBox} ${
-                          ListingCheckboxs?.heating_cooling?.some(
-                            (data) => data === d?.name
-                          )
-                            ? selectedBox
-                            : ""
-                        }`}
+                        className={`${normalBox} ${ListingCheckboxs?.heating_cooling?.some(
+                          (data) => data === d?.name
+                        )
+                          ? selectedBox
+                          : ""
+                          }`}
                         onClick={() => {
                           const isSelected =
                             ListingCheckboxs?.heating_cooling?.some(
@@ -1602,13 +1654,12 @@ const AddListing = () => {
                     EcoFriendlyFeatures?.map((d, index) => (
                       <div
                         key={index}
-                        className={`${normalBox} ${
-                          ListingCheckboxs?.eco_friendly?.some(
-                            (data) => data === d?.name
-                          )
-                            ? selectedBox
-                            : ""
-                        }`}
+                        className={`${normalBox} ${ListingCheckboxs?.eco_friendly?.some(
+                          (data) => data === d?.name
+                        )
+                          ? selectedBox
+                          : ""
+                          }`}
                         onClick={() => {
                           const isSelected =
                             ListingCheckboxs?.eco_friendly?.some(
@@ -1665,13 +1716,12 @@ const AddListing = () => {
                     ClimateChangerAndEnergySaver?.map((d, index) => (
                       <div
                         key={index}
-                        className={`${normalBox} ${
-                          ListingCheckboxs?.climate_energy?.some(
-                            (data) => data === d?.name
-                          )
-                            ? selectedBox
-                            : ""
-                        }`}
+                        className={`${normalBox} ${ListingCheckboxs?.climate_energy?.some(
+                          (data) => data === d?.name
+                        )
+                          ? selectedBox
+                          : ""
+                          }`}
                         onClick={() => {
                           const isSelected =
                             ListingCheckboxs?.climate_energy?.some(
@@ -1839,14 +1889,15 @@ const AddListing = () => {
                 <label
                   htmlFor="propertyImg"
                   className="flex flex-col md:flex-row justify-center items-center gap-2 py-10 xl:py-24 cursor-pointer"
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   <input
                     id="propertyImg"
                     type="file"
                     name="propertyImg"
                     multiple
-                    onChange={onChangeImages}
+                    ref={propertyInputRef}
+                    onChange={(e) => { onChangeImages(e); onPropertyImageUpload() }}
                   />
                   <img src={dragImgIcon} alt="icon" className="w-8 lg:w-12" />
                   <div className="flex flex-row flex-wrap justify-center items-center gap-2 font-semibold text-center text-xs md:text-base lg:text-lg text-[#171717]">
@@ -1914,14 +1965,15 @@ const AddListing = () => {
                 <label
                   htmlFor="florePlansImg"
                   className="flex flex-col md:flex-row justify-center items-center gap-2 py-10 xl:py-24 cursor-pointer"
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   <input
                     id="florePlansImg"
                     type="file"
                     multiple
                     name="florePlansImg"
-                    onChange={onChangeImages}
+                    ref={florInputRef}
+                    onChange={(e) => { onChangeImages(e); onFlorImageUpload() }}
                   />
                   <img src={dragImgIcon} alt="icon" className="w-8 lg:w-12" />
                   <div className="flex flex-row flex-wrap justify-center items-center gap-2 font-semibold text-center text-xs md:text-base lg:text-lg text-[#171717]">
@@ -1990,14 +2042,15 @@ const AddListing = () => {
                 <label
                   htmlFor="statementOfInfo"
                   className="flex flex-col md:flex-row justify-center items-center gap-2 py-10 xl:py-24 cursor-pointer"
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   <input
                     id="statementOfInfo"
                     type="file"
                     name="statementOfInfo"
                     multiple
-                    onChange={onChangeImages}
+                    ref={statementInputRef}
+                    onChange={(e) => { onChangeImages(e); onStatementUpload() }}
                   />
                   <img src={dragImgIcon} alt="icon" className="w-8 lg:w-12" />
                   <div className="flex flex-row flex-wrap justify-center items-center gap-2 font-semibold text-center text-xs md:text-base lg:text-lg text-[#171717]">
@@ -2063,14 +2116,15 @@ const AddListing = () => {
                 <label
                   htmlFor="frontPageImg"
                   className="flex flex-col md:flex-row justify-center items-center gap-2 py-10 xl:py-24 cursor-pointer"
-                  onClick={() => {}}
+                  onClick={() => { }}
                 >
                   <input
                     id="frontPageImg"
                     type="file"
                     name="frontPageImg"
                     multiple
-                    onChange={onChangeImages}
+                    ref={frontPageInputRef}
+                    onChange={(e) => { onChangeImages(e); onFrontImageUpload() }}
                   />
                   <img src={dragImgIcon} alt="icon" className="w-8 lg:w-12" />
                   <div className="w-auto md:w-[50%] flex flex-row flex-wrap justify-center items-center gap-2 font-semibold text-center text-xs md:text-base lg:text-lg text-[#171717]">

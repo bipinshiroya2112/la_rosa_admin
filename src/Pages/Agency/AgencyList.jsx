@@ -168,7 +168,7 @@ const AgencyList = () => {
                 >
                   <div className="">
                     <img
-                      src={`${BACKEND_BASE_URL}${d?.agencyLargeLogo}`}
+                      src={d?.agencyLargeLogo}
                       alt=""
                       className="rounded-lg  w-[60%] md:w-[60%] h-[60vh] md:h-[7vh]"
                     />

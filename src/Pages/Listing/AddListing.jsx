@@ -202,7 +202,7 @@ const AddListing = () => {
     house_size_square: "",
     land_size: "",
     land_size_square: "",
-    other_features: "",
+    // other_features: "",
 
     // ------------ Image and Copy ------------
 
@@ -765,40 +765,18 @@ const AddListing = () => {
                 </div>
               </div>
 
-              <div className="w-full md:w-[40%] mt-4 md:mt-6">
-                <div className="font-medium text-[#171717] text-xs md:text-sm ">
-                  Price :<span className="px-1 text-red-500">*</span>
-                </div>
-                <div className="w-full flex flex-row justify-start items-center gap-2 mt-3">
-                  <input
-                    type="text"
-                    value={ListingDetails?.price}
-                    name="price"
-                    onChange={onInputChange}
-                    placeholder="Enter price"
-                    className="w-full font-medium text-[#737373] text-xs md:text-sm  outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5"
-                  />
 
-                  <div className="w-5 group relative flex justify-center">
-                    <img
-                      src={questionMark}
-                      alt="icon"
-                      className="w-5 cursor-pointer"
-                    />
-                    <span className="w-60 lg:w-80 absolute z-50 top-8 right-0 scale-0 transition-all group-hover:scale-100 rounded shadow-lg bg-[#FFFBEB] p-3 text-xs text-[#171717]">
-                      Price is used to determine the listing's relevance in
-                      search results. Price will display on the property unless
-                      the option to hide price is used.
-                    </span>
-                  </div>
-                </div>
-              </div>
 
               <div className="w-full md:w-[40%] mt-4 md:mt-6">
                 <div className="font-medium text-[#171717] text-xs md:text-sm ">
-                  Price Display :
+                  Price Display :<span className="px-1 text-red-500">*</span>
                 </div>
+                <div className="w-full mt-4 md:mt-6">
+                  {/* <div className="font-medium text-[#171717] text-xs md:text-sm ">
+                    Price :<span className="px-1 text-red-500">*</span>
+                  </div> */}
 
+                </div>
                 <div className="w-full flex flex-col justify-start items-start gap-3 mt-3">
                   {PriceDisplay?.length > 0 &&
                     PriceDisplay?.map((d, index) => (
@@ -848,14 +826,39 @@ const AddListing = () => {
                       </div>
                     ))}
 
-                  <input
-                    type="text"
-                    value={ListingDetails?.price_display}
-                    name="price_display"
-                    onChange={onInputChange}
-                    placeholder="Enter price"
-                    className="w-full font-medium text-[#737373] text-xs md:text-sm  outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5"
-                  />
+                  {ListingDetails?.price_display_checked != 'show_actual_price' ?
+                    <div className="w-full flex flex-row justify-start items-center gap-2 mt-3">
+                      <input
+                        type="text"
+                        value={ListingDetails?.price_display}
+                        name="price_display"
+                        onChange={onInputChange}
+                        placeholder="Enter price"
+                        className="w-full font-medium text-[#737373] text-xs md:text-sm  outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5"
+                      />
+                    </div> : <div className="w-full flex flex-row justify-start items-center gap-2 mt-3">
+                      <input
+                        type="text"
+                        value={ListingDetails?.price}
+                        name="price"
+                        onChange={onInputChange}
+                        placeholder="Enter price"
+                        className="w-full font-medium text-[#737373] text-xs md:text-sm  outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5"
+                      />
+                      <div className="w-5 group relative flex justify-center">
+                        <img
+                          src={questionMark}
+                          alt="icon"
+                          className="w-5 cursor-pointer"
+                        />
+                        <span className="w-60 lg:w-80 absolute z-50 top-8 right-0 scale-0 transition-all group-hover:scale-100 rounded shadow-lg bg-[#FFFBEB] p-3 text-xs text-[#171717]">
+                          Price is used to determine the listing's relevance in
+                          search results. Price will display on the property unless
+                          the option to hide price is used.
+                        </span>
+                      </div>
+                    </div>}
+
                 </div>
               </div>
               <div className="w-full md:w-[80%] rounded-md bg-[#FFFBEB] p-4 font-medium text-xs md:text-sm text-[#171717] mt-4 md:mt-6">
@@ -1232,7 +1235,8 @@ const AddListing = () => {
                 Bedrooms, Bathrooms
                 <div>
                   <div className="text-[#404040] font-semibold text-xs  mt-4 md:mt-6">
-                    Bedrooms <span className="px-1 text-red-500">*</span>
+                    Bedrooms
+                    {/* <span className="px-1 text-red-500">*</span> */}
                   </div>
                   <div className="flex justify-start items-center overflow-x-auto gap-4 my-2 py-2">
                     {Bedrooms?.length > 0 &&
@@ -1256,7 +1260,8 @@ const AddListing = () => {
                   </div>
 
                   <div className="text-[#404040] font-semibold text-xs  mt-4 md:mt-6">
-                    Bathrooms <span className="px-1 text-red-500">*</span>
+                    Bathrooms
+                    {/* <span className="px-1 text-red-500">*</span> */}
                   </div>
                   <div className="flex justify-start items-center overflow-x-auto gap-4 my-2 py-2">
                     {Bathrooms?.length > 0 &&
@@ -1432,7 +1437,7 @@ const AddListing = () => {
                           onChange={onInputChange}
                           className="w-[30%] font-medium !text-[#737373] text-xs md:text-sm outline-none py-1"
                         >
-                          <option value="Square">Square</option>
+                          {/* <option value="Square">Square</option> */}
                           <option value="Square metres">Square metres</option>
                         </select>
                       </div>
@@ -1458,7 +1463,7 @@ const AddListing = () => {
                           className="w-[30%] font-medium !text-[#737373] text-xs md:text-sm outline-none py-1"
                         >
                           <option value="Square metres">Square metres</option>
-                          <option value="Square">Square</option>
+                          {/* <option value="Square">Square</option> */}
                         </select>
                       </div>
                     </div>
@@ -1771,7 +1776,7 @@ const AddListing = () => {
 
               {/* ---------  Other Features --------- */}
 
-              <div className="text-[#404040] font-semibold text-sm md:text-base my-5 md:my-8">
+              {/* <div className="text-[#404040] font-semibold text-sm md:text-base my-5 md:my-8">
                 Other Features
                 <div className="w-full mt-4 md:mt-6">
                   <div className="font-medium text-[#171717] text-xs md:text-sm ">
@@ -1799,9 +1804,9 @@ const AddListing = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="border-b-2 border-[#E5E5E5] my-4 " />
+              {/* <div className="border-b-2 border-[#E5E5E5] my-4 " /> */}
 
               {/* ---------  Buttons--------- */}
 

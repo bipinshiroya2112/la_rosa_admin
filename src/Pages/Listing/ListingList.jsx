@@ -501,8 +501,8 @@ const ListingList = () => {
                         </div>
                       </div>
                       <div className="text-[#262626] font-semibold ext-xs md:text-sm py-1">
-                        ${i?.price}
-                        <span className="font-semibold text-xs px-1">unit</span>
+                        {i?.price && i?.price_display_checked == 'show_actual_price' ? `$${i?.price} unit` : i?.price_display}
+                        {/* <span className="font-semibold text-xs px-1">unit</span> */}
                       </div>
                     </div>
                   </div>

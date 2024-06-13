@@ -202,7 +202,7 @@ const AddListing = () => {
     house_size_square: "",
     land_size: "",
     land_size_square: "",
-    other_features: "",
+    // other_features: "",
 
     // ------------ Image and Copy ------------
 

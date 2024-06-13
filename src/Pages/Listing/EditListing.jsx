@@ -134,7 +134,7 @@ const EditListing = () => {
             house_size_square: mydata?.house_size_square,
             land_size: mydata?.land_size,
             land_size_square: mydata?.land_size_square,
-            other_features: mydata?.other_features,
+            // other_features: mydata?.other_features,
             heading: mydata?.heading,
             discription: mydata?.discription,
             video_url: mydata?.video_url,
@@ -334,7 +334,7 @@ const EditListing = () => {
     house_size_square: "",
     land_size: "",
     land_size_square: "",
-    other_features: "",
+    // other_features: "",
 
     // ------------ Image and Copy ------------
 

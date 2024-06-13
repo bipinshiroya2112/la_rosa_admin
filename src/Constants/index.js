@@ -73,10 +73,10 @@ const PriceDisplay = [
 ];
 
 const Bedrooms = [
-  {
-    name: "any",
-    title: "Any",
-  },
+  // {
+  //   name: "any",
+  //   title: "Any",
+  // },
   {
     name: "studio",
     title: "Studio",
@@ -104,10 +104,10 @@ const Bedrooms = [
 ];
 
 const Bathrooms = [
-  {
-    name: "any",
-    title: "Any",
-  },
+  // {
+  //   name: "any",
+  //   title: "Any",
+  // },
   {
     name: "+1",
     title: "+1",

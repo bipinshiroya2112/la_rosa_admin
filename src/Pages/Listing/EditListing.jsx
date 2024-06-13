@@ -962,7 +962,7 @@ const EditListing = () => {
                   'Awaiting Price Guide'.
                 </div>
 
-                <div className="flex justify-start items-center gap-2 md:text-sm px-2  mt-4 md:mt-6">
+                {/* <div className="flex justify-start items-center gap-2 md:text-sm px-2  mt-4 md:mt-6">
                   <input
                     type="checkbox"
                     checked={
@@ -991,7 +991,7 @@ const EditListing = () => {
                       phone number
                     </span>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="border-b-2 border-[#E5E5E5] my-4 md:my-8" />
 
@@ -1326,7 +1326,8 @@ const EditListing = () => {
                   Bedrooms, Bathrooms
                   <div>
                     <div className="text-[#404040] font-semibold text-xs  mt-4 md:mt-6">
-                      Bedrooms <span className="px-1 text-red-500">*</span>
+                      Bedrooms
+                      {/* <span className="px-1 text-red-500">*</span> */}
                     </div>
                     <div className="flex justify-start items-center overflow-x-auto gap-4 my-2 py-2">
                       {Bedrooms?.length > 0 &&
@@ -1350,7 +1351,8 @@ const EditListing = () => {
                     </div>
 
                     <div className="text-[#404040] font-semibold text-xs  mt-4 md:mt-6">
-                      Bathrooms <span className="px-1 text-red-500">*</span>
+                      Bathrooms
+                      {/* <span className="px-1 text-red-500">*</span> */}
                     </div>
                     <div className="flex justify-start items-center overflow-x-auto gap-4 my-2 py-2">
                       {Bathrooms?.length > 0 &&
@@ -1871,7 +1873,7 @@ const EditListing = () => {
 
                 {/* ---------  Other Features --------- */}
 
-                <div className="text-[#404040] font-semibold text-sm md:text-base my-5 md:my-8">
+                {/* <div className="text-[#404040] font-semibold text-sm md:text-base my-5 md:my-8">
                   Other Features
                   <div className="w-full mt-4 md:mt-6">
                     <div className="font-medium text-[#171717] text-xs md:text-sm ">
@@ -1901,7 +1903,7 @@ const EditListing = () => {
                   </div>
                 </div>
 
-                <div className="border-b-2 border-[#E5E5E5] my-4 " />
+                <div className="border-b-2 border-[#E5E5E5] my-4 " /> */}
 
                 {/* ---------  Buttons--------- */}
 

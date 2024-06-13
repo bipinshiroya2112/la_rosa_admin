@@ -1434,7 +1434,7 @@ const AddListing = () => {
                           onChange={onInputChange}
                           className="w-[30%] font-medium !text-[#737373] text-xs md:text-sm outline-none py-1"
                         >
-                          <option value="Square">Square</option>
+                          {/* <option value="Square">Square</option> */}
                           <option value="Square metres">Square metres</option>
                         </select>
                       </div>
@@ -1460,7 +1460,7 @@ const AddListing = () => {
                           className="w-[30%] font-medium !text-[#737373] text-xs md:text-sm outline-none py-1"
                         >
                           <option value="Square metres">Square metres</option>
-                          <option value="Square">Square</option>
+                          {/* <option value="Square">Square</option> */}
                         </select>
                       </div>
                     </div>

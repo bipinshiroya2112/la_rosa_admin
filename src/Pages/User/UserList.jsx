@@ -58,7 +58,8 @@ const UserList = () => {
   const [isDeleteUser, setIsDeleteUser] = useState(false);
   const [SelectedUser, setSelectedUser] = useState({});
 
-  const ConfirmUserDelete = async (selectUser) => {
+  const ConfirmUserDelete = async (SelectedUser) => {
+    console.log("Selecteuser", SelectedUser);
     await axiosInstanceAuth
       .post(`admin/User/delete/${SelectedUser?.id}`)
       .then((res) => {

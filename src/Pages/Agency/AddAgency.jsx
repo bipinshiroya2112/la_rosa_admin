@@ -117,7 +117,7 @@ const AddAgency = () => {
   //   { value: "Delta(South South)" },
   // ];
   const countryOptions = [
-    { value: "Colombia", label: "Colombia" },
+    // { value: "Colombia", label: "Colombia" },
     { value: "Nigeria", label: "Nigeria" },
   ];
   const nigeriaOptions = [

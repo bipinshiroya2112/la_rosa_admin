@@ -24,7 +24,7 @@ const Footer = () => {
     <div className="bg-white rounded-none lg:rounded-lg shadow-md hover:shadow-lg p-5 my-5 md:my-0">
       <div className="flex flex-col lg:flex-row justify-start lg:justify-between  gap-5 text-sm md:text-sm">
         <div className="text-[#404040]">
-          Admin Administration © REA Group 2013, Allrights reserved
+          Admin Administration © MREN Group 2024, Allrights reserved
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 place-items-start lg:place-items-center gap-3">
           {FooterLink?.length > 0 &&

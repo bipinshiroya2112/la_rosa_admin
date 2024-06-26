@@ -6,7 +6,7 @@ const Layout1 = ({ children }) => {
     <>
       <TopHeader />
       <NavBar />
-      <div className="grid grid-cols-10 px-0 lg:px-20 mt-20">
+      <div className="grid grid-cols-10 py-3 px-0 lg:px-20 mt-20">
         <div className="hidden xl:block col-span-2">
           <SideBar />
         </div>

@@ -11,7 +11,7 @@ const NavBar = () => {
 
   return (
     <>
-      <nav className="navbar">
+      <nav className="navbar py-4">
         <div className="navbar-container">
           <input type="checkbox" name="" id="" />
           <div className="hamburger-lines">
@@ -52,7 +52,7 @@ const NavBar = () => {
             <img
               src={logoSmall}
               alt="logo"
-              className="w-36 rounded-md cursor-pointer"
+              className="w-[10rem] lg:w-[20%] rounded-md cursor-pointer logo-img"
             />
           </div>
         </div>

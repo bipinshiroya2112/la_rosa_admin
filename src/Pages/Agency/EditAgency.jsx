@@ -3,24 +3,8 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import axiosInstanceAuth from "../../apiInstances/axiosInstanceAuth";
 import { emailRed } from "../../assets";
-import {
-  questionMark,
-  searchGray,
-  agencyLargeLogo,
-  AgencyLogo,
-  agencyMediumLogo,
-  agencySmallLogo,
-  commercialAgencyExtraLargeLogo,
-  commercialAgencyLargeLogo,
-  commercialAgencyMediumLogo,
-  commercialAgencySmallLogo,
-  heroImg,
-} from "../../assets";
 import Layout1 from "../../Layouts/Layout1";
-import { BACKEND_BASE_URL } from "../../apiInstances/baseurl";
-import { TextColor } from "../../Constants";
 import axiosInstanceAuthFormData from "../../apiInstances/axiosInstanceAuthFormData";
-import { ColourPicker } from "./ColourPicker";
 
 const EditAgency = () => {
   const navigate = useNavigate();
@@ -254,6 +238,8 @@ const EditAgency = () => {
     }
   };
 
+
+
   return (
     <Layout1>
       <div className="w-full bg-white rounded-t-xl">
@@ -361,42 +347,34 @@ const EditAgency = () => {
                 className="round w-full font-medium !text-[#737373] text-xs md:text-sm  outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5 mt-3"
               >
                 <option value="">Select state / region</option>
-                <option value="Bogotá">Bogotá</option>
-                <option value="Antioquia">Antioquia</option>
-                {/* <option value="Western Australia">Western Australia</option> */}
-                <option value="Valle del Cauca">Valle del Cauca</option>
-                <option value="Cundinamarca">Cundinamarca</option>
-                <option value="Atlántico">Atlántico</option>
-                <option value="Santander">Santander</option>
-                <option value="Bolívar">Bolívar</option>
-                <option value="Nariño">Nariño</option>
-                <option value="Córdoba">Córdoba</option>
-                <option value="Tolima">Tolima</option>
-                <option value="Cauca">Cauca</option>
-                <option value="Norte de Santander">Norte de Santander</option>
-                <option value="Boyacá">Boyacá</option>
-                <option value="Magdalena">Magdalena</option>
-                <option value="Huila">Huila</option>
-                <option value="Cesar">Cesar</option>
-                <option value="Caldas">Caldas</option>
-                <option value="Meta">Meta</option>
-                <option value="La Guajira">La Guajira</option>
-                <option value="Risaralda">Risaralda</option>
-                <option value="Sucre">Sucre</option>
-                <option value="Quindío">Quindío</option>
-                <option value="Chocó">Chocó</option>
-                <option value="Caquetá">Caquetá</option>
-                <option value="Casanare">Casanare</option>
-                <option value="Putumayo">Putumayo</option>
-                <option value="Arauca">Arauca</option>
-                <option value="Guaviare">Guaviare</option>
-                <option value="San Andrés y Providencia">
-                  San Andrés y Providencia
-                </option>
-                <option value="Amazonas">Amazonas</option>
-                <option value="Vichada">Vichada</option>
-                <option value="Vaupés">Vaupés</option>
-                <option value="Guainía">Guainía</option>
+                <option value="Adamawa(North East)">Adamawa(North East)</option>
+                <option value="Bauchi(North East)">Bauchi(North East)</option>
+                <option value="Borno(North East)">Borno(North East)</option>
+                <option value="Gombe(North East)">Gombe(North East)</option>
+                <option value="Taraba(North East)">Taraba(North East)</option>
+                <option value="Yobe(North East)">Yobe(North East)</option>
+                <option value="Zamfara(North West)">Zamfara(North West)</option>
+                <option value="Sokoto(North West)">Sokoto(North West)</option>
+                <option value="Kebbi(North West)">Kebbi(North West)</option>
+                <option value="Katsina(North West)">Katsina(North West)</option>
+                <option value="Kano(North West)">Kano(North West)</option>
+                <option value="Kaduna(North West)">Kaduna(North West)</option>
+                <option value="Jigawa(North West)">Jigawa(North West)</option>
+                <option value="Plateau(North Central)">Plateau(North Central)</option>
+                <option value="Niger(North Central)">Niger(North Central)</option>
+                <option value="Nasarawa(North Central)">Nasarawa(North Central)</option>
+                <option value="Kwara(North Central)">Kwara(North Central)</option>
+                <option value="Kogi(North Central)">Kogi(North Central)</option>
+                <option value="Federal Capital Territory(North Central)">Federal Capital Territory(North Central)</option>
+                <option value="Benue(North Central)">Benue(North Central)</option>
+                <option value="Imo(South East)">Imo(South East)</option>
+                <option value="Enugu(South East)">Enugu(South East)</option>
+                <option value="Ebony(South East)">Ebony(South East)</option>
+                <option value="Anambra(South East)">Anambra(South East)</option>
+                <option value="Abia(South East)">Abia(South East)</option>
+                <option value="Rivers(South South)">Rivers(South South)</option>
+                <option value="Edo(South South)">Edo(South South)</option>
+                <option value="Delta(South South)">Delta(South South)</option>
               </select>
             </div>
             <div className="w-full">
@@ -410,7 +388,7 @@ const EditAgency = () => {
                 className="round w-full font-medium !text-[#737373] text-xs md:text-sm  outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5 mt-3"
               >
                 <option value="">Select country</option>
-                <option value="Columbia">Columbia</option>
+                <option value="Nigeria">Nigeria</option>
               </select>
             </div>
           </div>
@@ -477,42 +455,34 @@ const EditAgency = () => {
                 className="round w-full font-medium !text-[#737373] text-xs md:text-sm  outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5 mt-3"
               >
                 <option value="">Select state / region</option>
-                <option value="Bogotá">Bogotá</option>
-                <option value="Antioquia">Antioquia</option>
-                {/* <option value="Western Australia">Western Australia</option> */}
-                <option value="Valle del Cauca">Valle del Cauca</option>
-                <option value="Cundinamarca">Cundinamarca</option>
-                <option value="Atlántico">Atlántico</option>
-                <option value="Santander">Santander</option>
-                <option value="Bolívar">Bolívar</option>
-                <option value="Nariño">Nariño</option>
-                <option value="Córdoba">Córdoba</option>
-                <option value="Tolima">Tolima</option>
-                <option value="Cauca">Cauca</option>
-                <option value="Norte de Santander">Norte de Santander</option>
-                <option value="Boyacá">Boyacá</option>
-                <option value="Magdalena">Magdalena</option>
-                <option value="Huila">Huila</option>
-                <option value="Cesar">Cesar</option>
-                <option value="Caldas">Caldas</option>
-                <option value="Meta">Meta</option>
-                <option value="La Guajira">La Guajira</option>
-                <option value="Risaralda">Risaralda</option>
-                <option value="Sucre">Sucre</option>
-                <option value="Quindío">Quindío</option>
-                <option value="Chocó">Chocó</option>
-                <option value="Caquetá">Caquetá</option>
-                <option value="Casanare">Casanare</option>
-                <option value="Putumayo">Putumayo</option>
-                <option value="Arauca">Arauca</option>
-                <option value="Guaviare">Guaviare</option>
-                <option value="San Andrés y Providencia">
-                  San Andrés y Providencia
-                </option>
-                <option value="Amazonas">Amazonas</option>
-                <option value="Vichada">Vichada</option>
-                <option value="Vaupés">Vaupés</option>
-                <option value="Guainía">Guainía</option>
+                <option value="Adamawa(North East)">Adamawa(North East)</option>
+                <option value="Bauchi(North East)">Bauchi(North East)</option>
+                <option value="Borno(North East)">Borno(North East)</option>
+                <option value="Gombe(North East)">Gombe(North East)</option>
+                <option value="Taraba(North East)">Taraba(North East)</option>
+                <option value="Yobe(North East)">Yobe(North East)</option>
+                <option value="Zamfara(North West)">Zamfara(North West)</option>
+                <option value="Sokoto(North West)">Sokoto(North West)</option>
+                <option value="Kebbi(North West)">Kebbi(North West)</option>
+                <option value="Katsina(North West)">Katsina(North West)</option>
+                <option value="Kano(North West)">Kano(North West)</option>
+                <option value="Kaduna(North West)">Kaduna(North West)</option>
+                <option value="Jigawa(North West)">Jigawa(North West)</option>
+                <option value="Plateau(North Central)">Plateau(North Central)</option>
+                <option value="Niger(North Central)">Niger(North Central)</option>
+                <option value="Nasarawa(North Central)">Nasarawa(North Central)</option>
+                <option value="Kwara(North Central)">Kwara(North Central)</option>
+                <option value="Kogi(North Central)">Kogi(North Central)</option>
+                <option value="Federal Capital Territory(North Central)">Federal Capital Territory(North Central)</option>
+                <option value="Benue(North Central)">Benue(North Central)</option>
+                <option value="Imo(South East)">Imo(South East)</option>
+                <option value="Enugu(South East)">Enugu(South East)</option>
+                <option value="Ebony(South East)">Ebony(South East)</option>
+                <option value="Anambra(South East)">Anambra(South East)</option>
+                <option value="Abia(South East)">Abia(South East)</option>
+                <option value="Rivers(South South)">Rivers(South South)</option>
+                <option value="Edo(South South)">Edo(South South)</option>
+                <option value="Delta(South South)">Delta(South South)</option>
               </select>
             </div>
             <div className="w-full">
@@ -526,7 +496,7 @@ const EditAgency = () => {
                 className="round w-full font-medium !text-[#737373] text-xs md:text-sm  outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5 mt-3"
               >
                 <option value="">Select country</option>
-                <option value="Columbia">Columbia</option>
+                <option value="Nigeria">Nigeria</option>
               </select>
             </div>
           </div>

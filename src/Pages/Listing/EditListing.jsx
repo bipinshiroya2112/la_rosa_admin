@@ -719,6 +719,7 @@ const EditListing = () => {
                     <option value="Rent">Rent</option>
                     <option value="off_market">Off Market</option>
                     <option value="under_offer">Under Offer</option>
+                    <option value="new">New</option>
                   </select>
                 </div>
 
@@ -744,6 +745,7 @@ const EditListing = () => {
                     </option>
                     <option value="Flat">Flat</option>
                     <option value="House">House</option>
+                    <option value="House&Land">House & Land</option>
                     <option value="Retirement Living">Retirement Living</option>
                     <option value="Serviced Apartment">
                       Serviced Apartment

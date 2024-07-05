@@ -253,10 +253,20 @@ const AddListing = () => {
     statementOfInfoShow: [],
   });
 
+  const [isShowNewDropDown, SetIsShowNewDropDown] = useState(false)
+  useEffect(() => {
+    if (ListingDetails.status == 'new') {
+      SetIsShowNewDropDown(true)
+    } else {
+      SetIsShowNewDropDown(false)
+    }
+  }, [ListingDetails])
+
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setListingDetails({ ...ListingDetails, [name]: value });
   };
+
 
   const onCheckboxChange = (e) => {
     const { name, checked } = e.target;
@@ -654,25 +664,34 @@ const AddListing = () => {
                   className="round w-full font-medium !text-[#737373] text-xs md:text-sm  outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5 mt-3"
                 >
                   <option value="">Select property type</option>
-                  <option value="Acreage/Semi-Rural">Acreage/Semi-Rural</option>
-                  <option value="Alpine">Alpine</option>
-                  <option value="Apartment">Apartment</option>
-                  <option value="Block Of Units">Block Of Units</option>
-                  <option value="Duplex/Semi-detached">
-                    Duplex/Semi-detached
-                  </option>
-                  <option value="Flat">Flat</option>
-                  <option value="House">House</option>
-                  <option value="House&Land">House & Land</option>
-                  <option value="Retirement Living">Retirement Living</option>
-                  <option value="Serviced Apartment">Serviced Apartment</option>
-                  <option value="Studio">Studio</option>
-                  <option value="Terrace">Terrace</option>
-                  <option value="Townhouse">Townhouse</option>
-                  <option value="Unit">Unit</option>
-                  <option value="Villa">Villa</option>
-                  <option value="Warehouse">Warehouse</option>
-                  <option value="Other">Other</option>
+                  {
+                    isShowNewDropDown ?
+                      <>
+                        <option value="Apartment">Apartment</option>
+                        <option value="House&Land">House & Land</option>
+                      </>
+                      : <>
+                        <option value="Acreage/Semi-Rural">Acreage/Semi-Rural</option>
+                        <option value="Alpine">Alpine</option>
+                        <option value="Apartment">Apartment</option>
+                        <option value="Block Of Units">Block Of Units</option>
+                        <option value="Duplex/Semi-detached">
+                          Duplex/Semi-detached
+                        </option>
+                        <option value="Flat">Flat</option>
+                        <option value="House">House</option>
+                        <option value="House&Land">House & Land</option>
+                        <option value="Retirement Living">Retirement Living</option>
+                        <option value="Serviced Apartment">Serviced Apartment</option>
+                        <option value="Studio">Studio</option>
+                        <option value="Terrace">Terrace</option>
+                        <option value="Townhouse">Townhouse</option>
+                        <option value="Unit">Unit</option>
+                        <option value="Villa">Villa</option>
+                        <option value="Warehouse">Warehouse</option>
+                        <option value="Other">Other</option>
+                      </>
+                  }
                 </select>
               </div>
 

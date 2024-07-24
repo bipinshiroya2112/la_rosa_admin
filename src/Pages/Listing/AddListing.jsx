@@ -184,8 +184,8 @@ const AddListing = () => {
     street_address_name: "",
     suburb: "",
     municipality: "",
-    auction_result: "",
-    maximum_bid: "",
+    // auction_result: "",
+    // maximum_bid: "",
 
     // ------------ Property Details ------------
 
@@ -1167,7 +1167,8 @@ const AddListing = () => {
                 />
               </div>
 
-              <div className="font-semibold text-[#404040] text-sm md:text-base lg:text-lg mt-6 md:mt-12">
+              {/* Auction outcome section */}
+              {/* <div className="font-semibold text-[#404040] text-sm md:text-base lg:text-lg mt-6 md:mt-12">
                 Auction Outcome
               </div>
 
@@ -1207,8 +1208,8 @@ const AddListing = () => {
                   placeholder="e.g 500000"
                   className="w-full font-medium text-[#737373] text-xs md:text-sm  outline-none border border-[#E5E5E5] rounded-[28px] py-3 px-5 mt-3"
                 />
-              </div>
-
+              </div> */}
+              {/* Auction outcome section */}
               <div className="border-b-2 border-[#E5E5E5] my-6 " />
 
               <div className="flex flex-row justify-between items-center gap-4">

@@ -9,6 +9,7 @@ import ListingList from "./Listing/ListingList";
 import AddListing from "./Listing/AddListing";
 import EditListing from "./Listing/EditListing";
 import UserList from "./User/UserList";
+import AdvertiseList from "./Advertise/Advertise";
 
 export {
   Home,
@@ -22,4 +23,5 @@ export {
   AddListing,
   EditListing,
   UserList,
+  AdvertiseList
 };

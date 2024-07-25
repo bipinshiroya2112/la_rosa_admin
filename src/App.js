@@ -23,6 +23,7 @@ import {
   AddAgency,
   EditAgency,
   UserList,
+  AdvertiseList
 } from "./Pages";
 import { Erro404 } from "./components";
 import "react-tooltip/dist/react-tooltip.css";
@@ -64,6 +65,8 @@ function App() {
 
         <Route exact path="/user" element={<UserList />} />
 
+        <Route exact path="/advertise" element={<AdvertiseList />} />
+
         {/* -------- Authentication -------- */}
 
         <Route exact path="/log-in" element={<LogInForm />} />
@@ -77,7 +80,7 @@ function App() {
           path="/auth/reset-password/:id"
           element={<ResetPasswordForm />}
         />
-           <Route
+        <Route
           exact
           path="/auth/reset-password/:id/:token"
           element={<ForgetPasswordFormLink />}

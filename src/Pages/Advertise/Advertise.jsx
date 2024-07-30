@@ -92,12 +92,12 @@ const AdvertiseList = () => {
                   <td className="p-4 text-[#262626] font-medium text-xs md:text-sm lg:text-base">
                     <div className='flex gap-2'>
                       <span onClick={() => {
-                        if (d.status === 'reject') {
+                        if (d.status === 'reject' || d.status === 'pending') {
                           updateStatus(d._id, 'active');
                         }
                       }} className={`${d.status === 'active' ? "disabled bg-green-500 cursor-text " : "bg-green-600 cursor-pointer"} text-xs text-blue-50 p-1 rounded-md`}>Active</span>
                       <span onClick={() => {
-                        if (d.status === 'active') {
+                        if (d.status === 'active' || d.status === 'pending') {
                           updateStatus(d._id, 'reject')
                         }
                       }} className={`${d.status === 'reject' ? "disabled bg-red-500 cursor-text " : "bg-red-600 cursor-pointer"} text-xs text-blue-50 p-1 rounded-md`}>Reject</span>

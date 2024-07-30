@@ -87,7 +87,7 @@ const AdvertiseList = () => {
                   <td className="p-4 text-[#262626] font-medium text-xs md:text-sm lg:text-base">
                     {d.status == 'active' ? <span className='text-green-600 font-bold'>{d.status}</span> : null}
                     {d.status == 'reject' ? <span className='text-red-600 font-bold'>{d.status}</span> : null}
-                    {d.status == 'pending' ? <span className='text-green-600 font-bold'>{d.status}</span> : null}
+                    {d.status == 'pending' ? <span className='text-orange-600 font-bold'>{d.status}</span> : null}
                   </td>
                   <td className="p-4 text-[#262626] font-medium text-xs md:text-sm lg:text-base">
                     <div className='flex gap-2'>

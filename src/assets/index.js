@@ -36,6 +36,7 @@ import listing01 from "./listing01.png";
 import listing02 from "./listing02.png";
 import listing03 from "./listing03.png";
 import listings from "./listings.png";
+import listingsWhite from "./listingsWhite.png";
 import logo from "./logo.png";
 import logoSmall from "./logoSmall.png";
 import ManageProfiles from "./ManageProfiles.png";
@@ -61,6 +62,7 @@ import sideArrowGray from "./sideArrowGray.png";
 import sideArrowRed from "./sideArrowRed.png";
 import shareRed from "./shareRed.png";
 import social from "./social.png";
+import socialWhite from "./socialWhite.png";
 import tablet from "./tablet.png";
 import tabletRed from "./tabletRed.svg";
 import threeDot from "./threeDot.png";
@@ -84,6 +86,8 @@ import heroImg from "./heroImg.png";
 
 export {
   add,
+  socialWhite,
+  listingsWhite,
   AgencyLogo,
   agent1,
   agent2,

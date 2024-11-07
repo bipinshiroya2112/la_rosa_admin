@@ -4,7 +4,6 @@ import { HeaderData } from "../../Constants";
 
 const SideBar = () => {
   const getPath = useLocation().pathname.split("/")?.[1];
-
   return (
     <ul className="h-full bg-white rounded-lg shadow-md hover:shadow-lg p-6">
       {HeaderData?.length > 0 &&

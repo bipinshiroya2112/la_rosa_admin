@@ -49,7 +49,7 @@ const AdvertiseList = () => {
   return (
     <Layout1>
       <div className='px-6 lg:px-0'>
-        <div className="bg-white rounded-2xl shadow-md my-10">
+        <div className="bg-white rounded-2xl shadow-md mb-10">
           <div className="overflow-x-auto rounded-2xl">
             <table className="min-w-[900px] w-full table-auto bg-white">
               <thead>
@@ -122,7 +122,6 @@ const AdvertiseList = () => {
           </div>
         </div>
       </div>
-
     </Layout1 >
   )
 }

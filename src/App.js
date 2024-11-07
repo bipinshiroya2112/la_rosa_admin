@@ -27,6 +27,7 @@ import {
 } from "./Pages";
 import { Erro404 } from "./components";
 import "react-tooltip/dist/react-tooltip.css";
+import AdvertiseAdsList from "./Pages/Advertise/AdvertiseAdsList";
 
 function App() {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ function App() {
         <Route exact path="/user" element={<UserList />} />
 
         <Route exact path="/advertise" element={<AdvertiseList />} />
+        <Route exact path="/advertiseList" element={<AdvertiseAdsList />} />
 
         {/* -------- Authentication -------- */}
 

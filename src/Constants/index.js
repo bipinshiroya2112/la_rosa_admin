@@ -2,12 +2,14 @@ import {
   home,
   homeGray,
   listings,
+  listingsWhite,
   marketings,
   marketingWhite,
   reports,
   social,
   website,
   xmlUploads,
+  socialWhite,
   yourProfile,
   yourProfileWhite,
 } from "../assets";
@@ -21,7 +23,7 @@ const HeaderData = [
   },
   {
     icon: social,
-    activeIcon: home,
+    activeIcon: socialWhite,
     pathname: "/agency",
     pagename: "Agencies",
   },
@@ -33,21 +35,27 @@ const HeaderData = [
   },
   {
     icon: listings,
-    activeIcon: home,
+    activeIcon: listingsWhite,
     pathname: "/listings",
     pagename: "Listings",
   },
   {
     icon: social,
-    activeIcon: home,
+    activeIcon: socialWhite,
     pathname: "/user",
     pagename: "Users",
   },
   {
     icon: social,
-    activeIcon: home,
+    activeIcon: socialWhite,
     pathname: "/advertise",
-    pagename: "Advertise",
+    pagename: "Advertise User",
+  },
+  {
+    icon: listings,
+    activeIcon: home,
+    pathname: "/advertiseList",
+    pagename: "Advertise List",
   },
 ];
 

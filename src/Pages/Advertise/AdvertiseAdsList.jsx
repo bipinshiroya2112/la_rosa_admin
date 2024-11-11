@@ -293,7 +293,7 @@ const AdvertiseAdsList = () => {
                 <AdSkeletons item={selectAdvertise} />
                 {/* ------ Fotter ------ */}
                 <div className='flex items-center justify-center gap-3 my-3'>
-                  <button className={`px-3 py-1 rounded font-medium text-sm md:text-sm lg:text-base ${selectAdvertise.approved_status === 'approved' ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-green-100 text-green-600'}`} disabled={selectAdvertise.approved_status === 'approved'} onClick={(e) => changeStatus('approved')}>APPROVED</button>
+                  <button className={`px-3 py-1 rounded font-medium text-sm md:text-sm lg:text-base ${selectAdvertise.approved_status === 'approved' ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-green-100 text-green-600'}`} disabled={selectAdvertise.approved_status === 'approved'} onClick={(e) => changeStatus('approved')}>APPROVE</button>
                   <button className={`px-3 py-1 rounded font-medium text-sm md:text-sm lg:text-base ${selectAdvertise.approved_status === 'rejected' ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-red-100 text-red-600'}`} onClick={(e) => changeStatus('rejected')} disabled={selectAdvertise.approved_status === 'rejected'}>REJECT</button>
                   <button className='z-auto px-3 py-1 rounded font-medium text-sm md:text-sm lg:text-base bg-orange-100 text-orange-600' onClick={(e) => setShowConfirmation(false)}>CANCEL</button>
                 </div>

@@ -158,7 +158,7 @@ const Blog = () => {
                     <div className="mb-3 flex w-full flex-col justify-between px-4 pt-2 text-start h-[200px] ">
                       <div className="flex flex-col justify-between mb-2 ">
                         <h3 className="text-xl font-semibold text-gray-900">{blog.title}</h3>
-                        <p className="text-gray-600 mt-2 flex-grow ">{blog?.description}</p>
+                        <p className="text-gray-600 mt-2 flex-grow line-clamp-2">{blog?.description}</p>
                         <p className="text-sm text-gray-500 mt-4">{new Date(blog.updatedAt).toLocaleDateString("en-US", {
                           year: "numeric",
                           month: "long",

@@ -167,6 +167,9 @@ code {
 input[type="file"] {
   display: none;
 }
+.file-visible {
+  display: block !important;
+}
 
 .sidebar {
   transition: all 0.4s ease-in-out;

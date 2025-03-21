@@ -57,6 +57,12 @@ const HeaderData = [
     pathname: "/advertiseList",
     pagename: "Advertise List",
   },
+  {
+    icon: listings,
+    activeIcon: home,
+    pathname: "/blog",
+    pagename: "Blog",
+  },
 ];
 
 const NewOrEstablished = [

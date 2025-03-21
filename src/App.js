@@ -28,6 +28,9 @@ import {
 import { Erro404 } from "./components";
 import "react-tooltip/dist/react-tooltip.css";
 import AdvertiseAdsList from "./Pages/Advertise/AdvertiseAdsList";
+import Blog from "./Pages/Blog/Blog";
+import AddBlog from "./Pages/Blog/AddBlog";
+import EditBlog from "./Pages/Blog/EditBlog";
 
 function App() {
   const navigate = useNavigate();
@@ -68,6 +71,11 @@ function App() {
 
         <Route exact path="/advertise" element={<AdvertiseList />} />
         <Route exact path="/advertiseList" element={<AdvertiseAdsList />} />
+        {/* -------- Blog -------- */}
+        <Route exact path="/blog" element={<Blog />} />
+        <Route exact path="/blog/add" element={<AddBlog />} />
+        <Route exact path="/blog/:id" element={<EditBlog />} />
+
 
         {/* -------- Authentication -------- */}
 

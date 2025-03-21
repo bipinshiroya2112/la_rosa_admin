@@ -83,6 +83,7 @@ import commercialAgencyMediumLogo from "./commercialAgencyMediumLogo.png";
 import commercialAgencyLargeLogo from "./commercialAgencyLargeLogo.png";
 import commercialAgencyExtraLargeLogo from "./commercialAgencyExtraLargeLogo.png";
 import heroImg from "./heroImg.png";
+import eyeSvg from "./eye.svg";
 
 export {
   add,
@@ -170,4 +171,5 @@ export {
   commercialAgencyLargeLogo,
   commercialAgencyExtraLargeLogo,
   heroImg,
+  eyeSvg
 };

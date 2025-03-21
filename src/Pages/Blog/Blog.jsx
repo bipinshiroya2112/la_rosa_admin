@@ -22,18 +22,9 @@ const Blog = () => {
       const searchWords = search.toLowerCase().trim().split(" ");
       setBlogList(
         searchBlogList?.filter((item) => {
-          const principalNameWords = (
-            (item?.title || "") + " " +
-            (item?.city || "") + " " +
-            (item?.advertiseType || "")
-          )
-            .toLowerCase()
-            .trim()
-            .split(" ");
+          const titleWords = (item?.title || "").toLowerCase().trim().split(" ");
           return searchWords.every((word) =>
-            principalNameWords.some((principalWord) =>
-              principalWord.includes(word)
-            )
+            titleWords.some((titleWord) => titleWord.includes(word))
           );
         })
       );
@@ -52,6 +43,7 @@ const Blog = () => {
       .then((res) => {
         if (res?.data?.status) {
           setBlogList(res?.data?.data);
+          setSearchBlogList(res?.data?.data);
         } else {
           toast.error(res?.data?.message);
         }
